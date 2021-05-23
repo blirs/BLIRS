@@ -16,24 +16,21 @@ camera.radar_numPx_x = 1000;
 % Set the vertical Number of Pixels for the radar Image
 camera.radar_numPx_y = 1000;
 % Set the horizontal Number of Pixels for the ir Image
-camera.ir_numPx_x = 100;
+camera.ir_numPx_x = 500;
 % Set the vertical Number of Pixels for the ir Image
-camera.ir_numPx_y = 100;
+camera.ir_numPx_y = 500;
 % Define the Number of Frames of the Simulation
 camera.numofFrames = 2;
 % Define the Frame Rate Per Second
 camera.fps = 1;
 %Define the scale from Blender units to meters
-camera.scale =10; % 10BU=1meters
+camera.scale = 10; % 10 BU (Blender Units) = 1 meters
 % Define the focal length of the Camera
-camera.focalLen=16;    %mm
+camera.focalLen = 16;    %mm
 % Define the Width of the Camera
 camera.dimension_width = 32;
 % The output of the radar simulation is saved to a mat file with the
 % name outputfile_radarx_out.mat x is the frame number
-camera.doSave=true;
-
-
-
+camera.doSave = true;
 end
 
