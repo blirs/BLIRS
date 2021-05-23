@@ -11,10 +11,10 @@ function [  ] = hdrRenders2matlab( directories,camera )
 fileName =directories.filename_radar ;    % the name of the radar renders files 
 filepath = directories.outputfile_radar ; % the path of the radar renders 'Rander_Renders'
 outputpath = directories.radarmatfiles;   % the path of the output .mat files 'Exr_to_mat_files'
-scale =camera.scale;                                 % 1Belnder Unit = 1m
+scale = camera.scale;                                 % 1 Blender Unit = 1m
 fps = camera.fps ;
 %Plot Defs
-doPlot=false;
+doPlot=false; 
 
 % add exrread to path
 addpath('openexr-matlab-master')
@@ -46,10 +46,11 @@ if doPlot
     figure(1)
     imshow(radarImage);%tonemap(radarImage_full))
     figure(2)
+    maxRange = 10*max(zImage(:));   %temporary fix
     imshow(1/maxRange*scale*zImage)
 end
 
-save([outputpath,fileName,num2str(i)],'radarImage','zImage') % save the .mat file to the Folder 'Exr_to_mat_files'
+save([fullfile(outputpath,fileName),num2str(i)],'radarImage','zImage') % save the .mat file to the Folder 'Exr_to_mat_files'
 end
 
 disp('Packing exr files finished')

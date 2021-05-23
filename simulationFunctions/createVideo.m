@@ -22,9 +22,9 @@ resultspath = directories.results;    % the path of the results folder 'Simulati
 
 
 %% create the video
-vw = VideoWriter([resultspath filename,'.avi'],'Uncompressed AVI');
+vw = VideoWriter(fullfile(resultspath,[filename,'.avi']),'Uncompressed AVI');
 
-vw.FrameRate= camera.fps;
+vw.FrameRate = camera.fps;
 
 open(vw)
 for i=1:camera.numofFrames
@@ -36,7 +36,7 @@ for i=1:camera.numofFrames
         x='0';
     end
 
-    im= hdrread([filepath,filename,x,num2str(i),'.hdr']);
+    im= hdrread([fullfile(filepath, filename), x,num2str(i),'.hdr']);
     im = im(:,:,1);
 
     bright = (im-minbright).*((1/(maxbright-minbright))*256);
@@ -44,7 +44,7 @@ for i=1:camera.numofFrames
     bright(bright>256)=256;  % set max brightness forPixels with brightness higher than that of 30deg
     imagebright = round(bright);
     
-    writeVideo(vw,(imagebright/256));
+    writeVideo(vw, (imagebright/256));
 end
 close(vw)
 

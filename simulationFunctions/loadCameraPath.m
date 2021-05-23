@@ -18,7 +18,7 @@ for ii=1:length(path{1})
        cameraPosition(jj,1)=str2double(path{3}(ii));
        cameraPosition(jj,2)=str2double(path{4}(ii));
        cameraPosition(jj,3)=str2double(path{5}(ii));
-       jj=jj+1;
+       jj = jj+1;
     end
 end
 
