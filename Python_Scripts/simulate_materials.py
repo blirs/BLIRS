@@ -1,7 +1,8 @@
 bl_info = {
     "name": "Materials Toolbox",
     "author": "monika ouza",
-    "blender": (2, 76),
+	"version": (1,1,0,0),
+    "blender": (2, 80, 0),
     "location": "View3D > CTR +SHIFT+ M key",
     "description": "Menu of Material Tools for Simulation: Loads Predefined Materials, Change from Infrared to Radar Materials and viseversa, Define new Materials, Use parameters of predefined matterials to define new ones",
     "category": "Material"}
@@ -624,6 +625,7 @@ class newmatfrompredefined(bpy.types.Operator):
         op = bpy.ops.object.definenewmat('INVOKE_DEFAULT',matname = materialoutput[0],irreflectivity = materialoutput[1],irspecreflectivity = materialoutput[2],irroughness = materialoutput[3],temperaturenew = materialoutput[4],emissivity = materialoutput[5],irmirrorreflection =materialoutput[6],irmirrorreflectfactor = materialoutput[7],radarreflectivity=materialoutput[8],radarspecreflectivity=materialoutput[9],radarroughness=materialoutput[10],radarmirrorreflection=materialoutput[11],radarmirrorreflectfactor=materialoutput[12])
   
         return {'FINISHED'}
+		
 class select_material(bpy.types.Menu):
     bl_label = "Select Material"
 
@@ -773,6 +775,7 @@ class change_materials(bpy.types.Operator):
     def execute(self,context):
          switchmaterials(self.change_to_radar, self.change_to_ir)
          return {'FINISHED'}
+		 
 # -----------------------------------------------------------------------------
 def menu_func(self, context):
    #self.layout.operator_context ='INVOKE_DEFAULT'    
@@ -786,9 +789,22 @@ def menu_func(self, context):
 # store keymaps here to access after registration
 addon_keymaps = []
 
+classes = (
+    definenewmat,
+	newmatfrompredefined,
+	select_material,
+	loadmaterials,
+	getpath,
+	irwith_diff_temp,
+	change_materials,
+)
 
 def register():
-    bpy.utils.register_module(__name__)
+    #bpy.utils.register_module(__name__) # Blender 2.77
+	#new Blender 2.80 method
+    from bpy.utils import register_class
+    for cls in classes:
+        register_class(cls)
     #bpy.utils.register_class(loadmaterials)
     #bpy.utils.register_class(getpath)
     #bpy.utils.register_class(change_materials)
@@ -819,7 +835,12 @@ def register():
         addon_keymaps.append((km,kmi,kmx,kmo,kmt,kml,kmp))
 
 def unregister():
-    bpy.utils.unregister_module(__name__)
+	#new Blender 2.80 method
+    from bpy.utils import unregister_class
+    for cls in reversed(classes):
+        unregister_class(cls)
+		
+    #bpy.utils.unregister_module(__name__)# Blender 2.77	
     #bpy.utils.unregister_class(loadmaterials)
     #bpy.utils.unregister_class(getpath)
     #bpy.utils.unregister_class(change_materials)
